@@ -17,7 +17,11 @@ public class ReceiveLogsDirect2 {
         channel.exchangeDeclare(EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
         String queueName = channel.queueDeclare().getQueue();
 
-        channel.queueBind(queueName, EXCHANGE_NAME, "error");
+        String[] routingKeys = new String[]{"error"};
+
+        for (String routingKey : routingKeys) {
+            channel.queueBind(queueName, EXCHANGE_NAME, routingKey);
+        }
 
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 

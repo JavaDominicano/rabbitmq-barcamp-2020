@@ -17,7 +17,11 @@ public class ReceiveLogsTopic1 {
         String queueName = channel.queueDeclare().getQueue();
 
 
-        channel.queueBind(queueName, EXCHANGE_NAME, "*.orange.*");
+        String[] routingKeys = new String[]{"*.orange.*"};
+
+        for (String routingKey : routingKeys) {
+            channel.queueBind(queueName, EXCHANGE_NAME, routingKey);
+        }
 
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
 
